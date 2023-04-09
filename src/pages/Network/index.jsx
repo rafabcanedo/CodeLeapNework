@@ -15,7 +15,6 @@ const Network = () => {
 
    <div className="flex flex-col md:flex items-center justify-center mt-8">
     <Posts />
-    <Posts />
    </div>
 
    </div>
