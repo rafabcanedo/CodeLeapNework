@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux';
 import { changeUser } from '../../redux/userSlice';
 
 const Home = () => {
- const [ name, setName ] = useState('');
+ const [ username, setUsername ] = useState('');
  const dispatch = useDispatch();
 
  const handleLogin = () => {
-  dispatch(changeUser(name))
+  dispatch(changeUser(username))
  }
 
  return(
@@ -26,7 +26,7 @@ const Home = () => {
       type="text"
       placeholder="Rafael Canedo"
       className="border border-zinc-200 shadow-sm h-10 mr-6 rounded-md focus:outline-none pl-2"
-      onChange={(e) => setName(e.target.value)}
+      onChange={(e) => setUsername(e.target.value)}
      />
 
      <div className="flex justify-end mt-4">

@@ -4,6 +4,7 @@ import { updatePost } from '../../redux/postsSlice';
 import * as Dialog from '@radix-ui/react-dialog';
 
 function EditPostModal() {
+  const [ data, setData ] = useState([]);
 
  const [ isEdit, setIsEdit ] = useState(false);
  const [ id, setId ] = useState(null);
@@ -21,10 +22,10 @@ function EditPostModal() {
      className="fixed w-screen h-screen bg-[#00000075] inset-0"
     />
 
+    {data.map(post =>
     <div>
     <Dialog.Content className="fixed border border-zinc-700 bg-slate-50 w-[600px] h-[300px] rounded-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 
-     {posts.length > 0 ? posts.map(post =>
      <div className="mt-8">
       <span className="font-semibold text-lg flex items-center justify-center">
        Edit Post
@@ -57,24 +58,31 @@ function EditPostModal() {
        )}
 
       <div className="flex flex-row justify-end gap-2 mt-6 mr-2">
-      <button className="border border-gray-600 hover:bg-slate-200 rounded font-semibold text-black h-6 w-28">Cancel</button>
+      <Dialog.Close>
+      <button 
+       className="border border-gray-600 hover:bg-slate-200 rounded font-semibold text-black h-6 w-28"
+      >
+       Cancel
+      </button>
+      </Dialog.Close>
       <button 
        className="bg-green-600 hover:bg-green-700 rounded font-semibold text-white h-6 w-28"
        onClick={() => {
         setIsEdit(true)
         setId(post.id)
         dispatch(updatePost({id: post.id, title: updateTitle, content: updateContent}))
-        //setIsEditr(false)
+        //setIsEdit(false)
       }}>
        Save
       </button>
       </div>
      </div>
-      ): ''}
+      
 
      <Dialog.Close />
     </Dialog.Content>
     </div>
+    )}
 
    </Dialog.Portal>
  )

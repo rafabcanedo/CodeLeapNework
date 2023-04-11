@@ -1,19 +1,28 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../redux/postsSlice";
+import { createPost } from '../services/api';
+import { selectUser } from '../redux/userSlice';
 
 export default function NewPost() {
 
   const [ title, setTitle ] = useState("");
   const [ content, setContent ] = useState("");
-  //const posts = useSelector((state) => state.posts.items);
 
   const dispatch = useDispatch();
+  const { username } = useSelector(selectUser);
 
-  const handleCreatePost = () => {
-    dispatch(addPost({id: 1, title, content}));
-    setTitle("");
-    setContent("");
+  const handleCreatePost = async () => {
+    await createPost({ username, title, content })
+    .then(response => {
+      dispatch(addPost(response));
+      setTitle("");
+      setContent("");
+      console.log("Deu super certo!")
+    })
+    .catch(() =>{
+      console.log("Deu meio que errado.")
+    })
   }
 
  return(
@@ -35,7 +44,7 @@ export default function NewPost() {
     <div className="flex flex-col">
      <label className="text-base text-neutral-600">Content</label>
      <textarea
-     value={content}
+      value={content}
       placeholder="Content here" 
       className="border border-zinc-200 shadow-sm h-16 mr-6 rounded-md focus:outline-none pl-2"
       onChange={(e) => setContent(e.target.value)}
