@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   try {
-    const response = await axios.get('https://dev.codeleap.co.uk/careers/?limit=10&offset=10');
+    const response = await axios.get('https://dev.codeleap.co.uk/careers/?limit=10');
     return (response.data);
   } catch (error) {
     //return err.message;
@@ -42,15 +42,7 @@ export const postsSlices = createSlice({
    })
    .addCase(fetchPosts.fulfilled, (state, action) => {
     state.status = 'succeeded';
-
-    let min = 1;
-    const loadedPosts = action.payload.map(post => {
-      post.date = sub(new Date(), { minutes: min++ }).toISOString();
-
-      return post;
-    });
-
-    state.posts = state.posts.concat(loadedPosts)
+    state.posts = action.payload.results
    })
    .addCase(fetchPosts.rejected, (state, action) => {
     state.status = 'failed'
