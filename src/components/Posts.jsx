@@ -45,7 +45,7 @@ export default function Posts() {
       </button>
       </Dialog.Trigger>
        
-       <DeletePostModal />
+       <DeletePostModal postId={post.id} />
        
      </Dialog.Root>
  

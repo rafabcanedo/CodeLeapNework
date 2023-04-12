@@ -1,15 +1,34 @@
 import { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useDispatch, useSelector } from "react-redux";
+import { removePost } from '../../services/api';
 import { deletePost } from '../../redux/postsSlice';
 
-function DeletePostModal() {
-  const [ data, setData ] = useState([]);
- 
+function DeletePostModal(props) {
  const dispatch = useDispatch();
 
- const posts = useSelector((state) => state.posts.items);
+ const [ data, setData ] = useState([]);
+ const posts = useSelector((state) => state.posts.post);
 
+ const handleDeletePost = () => {
+ removePost(props.postId)
+ .then(() => {
+  dispatch(deletePost(props.postId))
+  console.log("Excluído com sucesso!")
+ })
+ .catch(() =>{
+  console.log("Erro ao tentar excluir o post.")
+ })
+ }
+
+ /*
+ async function handleDeletePost(id) {
+  try {
+    await api.delete(`/careers/${id}`)
+} catch (error) {
+    console.log(error)
+}
+ }*/
  return(
   <>
     <Dialog.Portal>
@@ -17,11 +36,10 @@ function DeletePostModal() {
      className="fixed w-screen h-screen bg-[#00000075] inset-0"
     />
 
-   {data.map(post =>
     <div>
     <Dialog.Content className="fixed border border-zinc-700 bg-slate-50 w-[500px] h-[180px] rounded-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 
-     <div className="mt-8" key={post.id}>
+     <div className="mt-8">
       <span className="font-semibold text-lg flex items-center justify-center">
        Are you sure you want to delete this post?
       </span>
@@ -34,21 +52,22 @@ function DeletePostModal() {
        Cancel
       </button>
       </Dialog.Close>
+
       <Dialog.Close>
       <button 
        className="bg-red-600 hover:bg-red-700 rounded font-semibold text-white h-6 w-28"
-       onClick={() => dispatch(deletePost(post.id))}
+       onClick={handleDeletePost}
       >
        Delete
       </button>
       </Dialog.Close>
       </div>
+
      </div> 
 
      <Dialog.Close />
     </Dialog.Content>
     </div>
-    )}
 
    </Dialog.Portal>
   </>

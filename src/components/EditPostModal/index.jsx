@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updatePost } from '../../redux/postsSlice';
+import { editPost } from '../../services/api';
 import * as Dialog from '@radix-ui/react-dialog';
+import { updatePost } from '../../redux/postsSlice';
 
 function EditPostModal() {
   const [ data, setData ] = useState([]);
 
- const [ isEdit, setIsEdit ] = useState(false);
- const [ id, setId ] = useState(null);
- const [ updateTitle, setUpdateTitle ] = useState("");
- const [ updateContent, setUpdateContent ] = useState("");
+const dispatch = useDispatch();
 
- const dispatch = useDispatch();
+ //const [ isEdit, setIsEdit ] = useState(false);
+ //const [ id, setId ] = useState(null);
+ const [ title, setUpdateTitle ] = useState("");
+ const [ content, setUpdateContent ] = useState("");
 
  const posts = useSelector((state) => state.posts.items);
+
+ const handleUpdatePost = () => {
+  editPost({ title, content })
+  .then(() => {
+    dispatch(updatePost({ title, content }))
+    console.log("Update Post com sucesso!")
+  })
+  .catch(() =>{
+    console.log("Erro ao tentar atualizar o Post.")
+  })
+ };
 
 
  return(
@@ -22,7 +34,6 @@ function EditPostModal() {
      className="fixed w-screen h-screen bg-[#00000075] inset-0"
     />
 
-    {data.map(post =>
     <div>
     <Dialog.Content className="fixed border border-zinc-700 bg-slate-50 w-[600px] h-[300px] rounded-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 
@@ -31,7 +42,6 @@ function EditPostModal() {
        Edit Post
       </span>
 
-        {isEdit && id == post.id && (
       <form action="" className="flex flex-col gap-6 ml-2">
        <div className="flex flex-col">
        <label className="font-semibold text-base">Title</label>
@@ -55,7 +65,6 @@ function EditPostModal() {
       />
        </div>
       </form>
-       )}
 
       <div className="flex flex-row justify-end gap-2 mt-6 mr-2">
       <Dialog.Close>
@@ -67,12 +76,8 @@ function EditPostModal() {
       </Dialog.Close>
       <button 
        className="bg-green-600 hover:bg-green-700 rounded font-semibold text-white h-6 w-28"
-       onClick={() => {
-        setIsEdit(true)
-        setId(post.id)
-        dispatch(updatePost({id: post.id, title: updateTitle, content: updateContent}))
-        //setIsEdit(false)
-      }}>
+       onClick={handleUpdatePost}
+      >
        Save
       </button>
       </div>
@@ -82,7 +87,6 @@ function EditPostModal() {
      <Dialog.Close />
     </Dialog.Content>
     </div>
-    )}
 
    </Dialog.Portal>
  )
