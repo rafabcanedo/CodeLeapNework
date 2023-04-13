@@ -21,14 +21,6 @@ function DeletePostModal(props) {
  })
  }
 
- /*
- async function handleDeletePost(id) {
-  try {
-    await api.delete(`/careers/${id}`)
-} catch (error) {
-    console.log(error)
-}
- }*/
  return(
   <>
     <Dialog.Portal>

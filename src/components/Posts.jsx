@@ -13,7 +13,7 @@ import frenchStrings from 'react-timeago/lib/language-strings/fr'
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 
 export default function Posts() {
- const [ data, setData ] = useState([]);
+ const [ id, setId ] = useState('');
  const formatter = buildFormatter(frenchStrings)
 
  const posts = useSelector(selectAllPosts);
@@ -29,6 +29,10 @@ export default function Posts() {
   }
   }, [postStatus, dispatch])
 
+  function handleModalDelete(event) {
+    setId(event.target.id)
+  }
+
  return(
   <>
   {posts.map(post =>
@@ -41,7 +45,7 @@ export default function Posts() {
      <Dialog.Root>
       <Dialog.Trigger asChild>
       <button>
-      <Trash size={23} className="text-white cursor-pointer" />
+      <Trash size={23} className="text-white cursor-pointer" onClick={handleModalDelete} />
       </button>
       </Dialog.Trigger>
        
@@ -56,7 +60,7 @@ export default function Posts() {
      </button>
      </Dialog.Trigger>
  
-     <EditPostModal />
+     <EditPostModal post={post} />
      
      </Dialog.Root>
  

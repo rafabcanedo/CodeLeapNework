@@ -4,7 +4,7 @@ import { addPost } from "../redux/postsSlice";
 import { createPost } from '../services/api';
 import { selectUser } from '../redux/userSlice';
 
-export default function NewPost() {
+export default function NewPost(props) {
 
   const [ title, setTitle ] = useState("");
   const [ content, setContent ] = useState("");

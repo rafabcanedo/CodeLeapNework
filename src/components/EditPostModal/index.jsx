@@ -4,22 +4,29 @@ import { editPost } from '../../services/api';
 import * as Dialog from '@radix-ui/react-dialog';
 import { updatePost } from '../../redux/postsSlice';
 
-function EditPostModal() {
-  const [ data, setData ] = useState([]);
+function EditPostModal(props) {
+ //const { id, postTitle, postContent } = props
+ const { post } = props;
 
 const dispatch = useDispatch();
 
  //const [ isEdit, setIsEdit ] = useState(false);
  //const [ id, setId ] = useState(null);
- const [ title, setUpdateTitle ] = useState("");
- const [ content, setUpdateContent ] = useState("");
+ const [ title, setUpdateTitle ] = useState(post.title);
+ const [ content, setUpdateContent ] = useState(post.content);
 
  const posts = useSelector((state) => state.posts.items);
 
  const handleUpdatePost = () => {
-  editPost({ title, content })
+  const updateePost = {
+  ...post,
+  title,
+  content,
+  };
+
+  editPost(updateePost)
   .then(() => {
-    dispatch(updatePost({ title, content }))
+    dispatch(updatePost(updateePost))
     console.log("Update Post com sucesso!")
   })
   .catch(() =>{
@@ -74,12 +81,15 @@ const dispatch = useDispatch();
        Cancel
       </button>
       </Dialog.Close>
+
+      <Dialog.Close>
       <button 
        className="bg-green-600 hover:bg-green-700 rounded font-semibold text-white h-6 w-28"
        onClick={handleUpdatePost}
       >
        Save
       </button>
+      </Dialog.Close>
       </div>
      </div>
       
