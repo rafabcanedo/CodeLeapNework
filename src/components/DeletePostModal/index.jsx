@@ -6,8 +6,6 @@ import { deletePost } from '../../redux/postsSlice';
 
 function DeletePostModal(props) {
  const dispatch = useDispatch();
-
- const [ data, setData ] = useState([]);
  const posts = useSelector((state) => state.posts.post);
 
  const handleDeletePost = () => {

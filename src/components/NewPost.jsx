@@ -36,8 +36,8 @@ export default function NewPost(props) {
       type="name"
       value={title}
       placeholder="Hello Word" 
-      className="border border-zinc-200 shadow-sm h-8 mr-6 rounded-md focus:outline-none pl-2"
       onChange={(e) => setTitle(e.target.value)}
+      className="border border-zinc-200 shadow-sm h-8 mr-6 rounded-md focus:outline-none pl-2"
      />
     </div>
 
@@ -46,8 +46,8 @@ export default function NewPost(props) {
      <textarea
       value={content}
       placeholder="Content here" 
-      className="border border-zinc-200 shadow-sm h-16 mr-6 rounded-md focus:outline-none pl-2"
       onChange={(e) => setContent(e.target.value)}
+      className="border border-zinc-200 shadow-sm h-16 mr-6 rounded-md focus:outline-none pl-2"
      >
      </textarea>
     </div>

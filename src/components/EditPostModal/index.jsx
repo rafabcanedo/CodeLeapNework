@@ -5,13 +5,10 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { updatePost } from '../../redux/postsSlice';
 
 function EditPostModal(props) {
- //const { id, postTitle, postContent } = props
  const { post } = props;
 
 const dispatch = useDispatch();
 
- //const [ isEdit, setIsEdit ] = useState(false);
- //const [ id, setId ] = useState(null);
  const [ title, setUpdateTitle ] = useState(post.title);
  const [ content, setUpdateContent ] = useState(post.content);
 

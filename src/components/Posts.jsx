@@ -12,8 +12,6 @@ import { Trash, NotePencil } from "@phosphor-icons/react"
 
 export default function Posts({ date }) {
  const [ id, setId ] = useState('');
- //const [ offset, setOffset] = useState(0);
- //const formatter = buildFormatter(frenchStrings)
 
  const posts = useSelector(selectAllPosts);
  const postStatus = useSelector(getPostsStatus);
