@@ -3,18 +3,17 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../redux/userSlice';
 import { fetchPosts, getPostsStatus, selectAllPosts } from '../redux/postsSlice';
+import moment from 'moment';
 
 import DeletePostModal from './DeletePostModal';
 import EditPostModal from './EditPostModal';
 
 import { Trash, NotePencil } from "@phosphor-icons/react"
-import TimeAgo from 'react-timeago'
-import frenchStrings from 'react-timeago/lib/language-strings/fr'
-import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 
-export default function Posts() {
+export default function Posts({ date }) {
  const [ id, setId ] = useState('');
- const formatter = buildFormatter(frenchStrings)
+ //const [ offset, setOffset] = useState(0);
+ //const formatter = buildFormatter(frenchStrings)
 
  const posts = useSelector(selectAllPosts);
  const postStatus = useSelector(getPostsStatus);
@@ -36,7 +35,7 @@ export default function Posts() {
  return(
   <>
   {posts.map(post =>
-  <div className="w-[800px] h-[300px] border border-gray-600 rounded-xl mt-10">
+  <div className="max-w-[800px] w-full border border-gray-600 rounded-xl mt-10">
     <div>
     <header className="flex items-center w-full h-16 bg-sky-600 rounded-xl justify-between">
      <h2 className="font-medium ml-4 text-white">{post.title}</h2>
@@ -71,7 +70,7 @@ export default function Posts() {
  
     <div className="flex flex-row justify-between ml-2 mr-2 mt-4 mb-6">
      <p className="text-sm text-gray-500">@{post.username}</p>
-     <TimeAgo date='Apr 11, 2023' formatter={formatter} />
+     <p>{moment().startOf('hour').fromNow()}</p>
     </div>
  
     <div className="flex flex-col ml-2">
